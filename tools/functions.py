@@ -1,4 +1,11 @@
-from tools.board import board
+from tools.board import boards
+import random
+board = random.choice(boards)
+
+
+def change_board():
+    global board
+    board = random.choice(boards)
 
 
 def display_board():  # Prints the board row by row
