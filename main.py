@@ -1,79 +1,14 @@
 """
 Sudoku Solver by Alan Shiah
 Uses backtracking algorithm
+Call stack
+Return a value so the previous call can complete on completion of
+state space tree nodes
+Otherwise, stack overflow
 """
-answer = [
-    [4, 3, 5, 2, 6, 9, 7, 9, 1],
-    [6, 8, 2, 5, 7, 1, 4, 9, 3],
-    [1, 9, 7, 8, 3, 4, 5, 6, 2],
-    [8, 2, 6, 1, 9, 5, 3, 4, 7],
-    [3, 7, 4, 6, 8, 2, 9, 1, 5],
-    [9, 5, 1, 7, 4, 3, 6, 2, 8],
-    [5, 1, 9, 3, 2, 6, 8, 7, 4],
-    [2, 4, 8, 9, 5, 7, 1, 3, 6],
-    [7, 6, 3, 4, 1, 8, 2, 5, 9]
-]
+from tools.functions import sudoku_solver, display_board
 
-board = [
-    [0, 0, 0, 2, 6, 0, 7, 0, 1],
-    [6, 8, 0, 0, 7, 0, 0, 9, 0],
-    [1, 9, 0, 0, 0, 4, 5, 0, 0],
-    [8, 2, 0, 1, 0, 0, 0, 4, 0],
-    [0, 0, 4, 6, 0, 2, 9, 0, 0],
-    [0, 5, 0, 0, 0, 3, 0, 2, 8],
-    [0, 0, 9, 3, 0, 0, 0, 7, 4],
-    [0, 4, 0, 0, 5, 0, 0, 3, 6],
-    [7, 0, 3, 0, 1, 8, 0, 0, 0]
-]
-
-num = list(range(1, 10))
-
-
-def display_board():
-    for row in board:
-        new = []
-        for element in row:
-            new.append(str(element))
-        print("  ".join(new))
-
-
-def valid(row, col):
-    global board
-    if board[row][col] == 0:
-        for n in num:
-            if n in board[row]:
-                continue
-            else:
-                board[row][col] = n
-                break
-        return True
-    else:
-        return False
-
-
-def sudoku_solver(row=None, col=None):
-    if row is None:
-        row = 0
-
-    if col is None:
-        col = 0
-
-    global board
-    if col >= len(board) - 1:
-        sudoku_solver(row=row + 1, col=0)
-
-    if row >= len(board) - 1:
-        print("Finished")
-        display_board()
-        exit()
-
-    if valid(row, col):
-        sudoku_solver(row, col)
-    elif board[row][col] != 0:
-        sudoku_solver(row, col=col + 1)
-    else:
-        board[row][col] = 0
-        sudoku_solver(row, col)
-
-
-sudoku_solver()
+if sudoku_solver(0, 0):
+    display_board()
+else:
+    print("Unsolvable Puzzle")
